@@ -3,9 +3,11 @@ package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.entity.Screen;
 import com.pantsunil.project_drill.respository.ScreenRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class ScreenService {
 
     private final ScreenRepository screenRepository;

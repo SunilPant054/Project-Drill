@@ -24,11 +24,8 @@ public class Hall {
     private List<Screen> screens;
 
     //constructor
-    public Hall(int id, String hallName, String location, List<Screen> screens) {
-        this.id = id;
-        this.hallName = hallName;
-        this.location = location;
-        this.screens = screens;
+    public Hall() {
+
     }
 
     //getters and setters

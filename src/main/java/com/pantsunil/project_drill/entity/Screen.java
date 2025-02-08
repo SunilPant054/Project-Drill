@@ -15,9 +15,6 @@ public class Screen {
     @Column(name = "number_of_seats")
     private int numberOfSeats;
 
-    @Column(name = "hall_id")
-    private int hallId;
-
     //relation with seat
     @OneToMany(mappedBy = "screen")
     private List<Seat> seats;
@@ -28,14 +25,9 @@ public class Screen {
     private Hall hall;
 
     //Constructor
-    public Screen(int id, Hall hall, List<Seat> seats, int hallId, int numberOfSeats) {
-        this.id = id;
-        this.hall = hall;
-        this.seats = seats;
-        this.hallId = hallId;
-        this.numberOfSeats = numberOfSeats;
-    }
+    public Screen() {
 
+    }
 
     //getters and setters
     public int getId() {
@@ -54,13 +46,6 @@ public class Screen {
         this.numberOfSeats = numberOfSeats;
     }
 
-    public int getHall_id() {
-        return hallId;
-    }
-
-    public void setHall_id(int hall_id) {
-        this.hallId = hall_id;
-    }
 
     public List<Seat> getSeats() {
         return seats;
@@ -79,13 +64,11 @@ public class Screen {
     }
 
     //tostring method
-
     @Override
     public String toString() {
         return "Screen{" +
                 "id=" + id +
                 ", numberOfSeats=" + numberOfSeats +
-                ", hallId=" + hallId +
                 ", seats=" + seats +
                 ", hall=" + hall +
                 '}';

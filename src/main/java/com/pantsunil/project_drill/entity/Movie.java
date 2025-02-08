@@ -1,7 +1,7 @@
 package com.pantsunil.project_drill.entity;
 
 import jakarta.persistence.*;
-import org.w3c.dom.Text;
+
 
 import java.time.LocalDateTime;
 
@@ -24,15 +24,13 @@ public class Movie {
     private LocalDateTime movieEndTime;
 
     @Column(name = "description")
-    private Text movieDescription;
+    private String movieDescription;
 
     //constructor
-    public Movie(String movieName, LocalDateTime movieStartTime, LocalDateTime movieEndTime, Text movieDescription){
-        this.movieName = movieName;
-        this.movieStartTime = movieStartTime;
-        this.movieEndTime = movieEndTime;
-        this.movieDescription = movieDescription;
+    public Movie() {
+
     }
+
 
     //getters and setters
 
@@ -68,11 +66,11 @@ public class Movie {
         this.movieEndTime = movieEndTime;
     }
 
-    public Text getMovieDescription() {
+    public String getMovieDescription() {
         return movieDescription;
     }
 
-    public void setMovieDescription(Text movieDescription) {
+    public void setMovieDescription(String movieDescription) {
         this.movieDescription = movieDescription;
     }
 

@@ -38,7 +38,7 @@ public class MovieService {
 
     //Custom query: find by name
     public Movie findByName(String name){
-        return movieRepository.findByName(name);
+        return movieRepository.getMovieByMovieName(name);
     }
 
 }

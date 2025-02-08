@@ -17,8 +17,6 @@ public class Seat {
     @Column(name = "column")
     private int column;
 
-    @Column(name = "screen_id")
-    private int screenId;
 
     //bidirectional relation with Screen
     @ManyToOne
@@ -26,13 +24,10 @@ public class Seat {
     private Screen screen;
 
     //Constructor
-    public Seat(int id, int row, int column, int screenId, Screen screen) {
-        this.id = id;
-        this.row = row;
-        this.column = column;
-        this.screenId = screenId;
-        this.screen = screen;
+
+    public Seat() {
     }
+
 
     //Getters and Setters
 
@@ -60,14 +55,6 @@ public class Seat {
         this.column = column;
     }
 
-    public int getScreenId() {
-        return screenId;
-    }
-
-    public void setScreenId(int screenId) {
-        this.screenId = screenId;
-    }
-
     public Screen getScreen() {
         return screen;
     }
@@ -83,7 +70,6 @@ public class Seat {
                 "id=" + id +
                 ", row=" + row +
                 ", column=" + column +
-                ", screenId=" + screenId +
                 ", screen=" + screen +
                 '}';
     }

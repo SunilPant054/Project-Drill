@@ -2,10 +2,12 @@ package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.entity.Seat;
 import com.pantsunil.project_drill.respository.SeatRepository;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.stereotype.Service;
+
 
 import java.util.List;
 
+@Service
 public class SeatService {
 
     private final SeatRepository seatRepository;
