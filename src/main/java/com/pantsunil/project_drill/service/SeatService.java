@@ -27,10 +27,11 @@ public class SeatService {
     }
 
     public Seat getSeatById(Integer id){
-        return seatRepository.findById(id).orElse(null);
+        return seatRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Seat with particular id is Not Found!!"));
     }
 
-    public void deleteHall(Integer id){
+    public void deleteSeat(Integer id){
         seatRepository.deleteById(id);
     }
 }

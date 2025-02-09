@@ -25,7 +25,8 @@ public class HallService {
     }
 
     public Hall getHallById(Integer id){
-        return hallRepository.findById(id).orElse(null);
+        return hallRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Hall with the given id not found!!"));
     }
 
     public void deleteHall(Integer id){

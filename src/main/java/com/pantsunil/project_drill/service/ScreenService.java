@@ -27,7 +27,8 @@ public class ScreenService {
     }
 
     public Screen getScreenById(Integer id){
-        return screenRepository.findById(id).orElse(null);
+        return screenRepository.findById(id)
+                .orElseThrow( () -> new RuntimeException("Screen by the given id Not Found!!"));
     }
 
     public void deleteHall(Integer id){

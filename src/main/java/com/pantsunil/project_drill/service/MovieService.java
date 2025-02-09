@@ -28,7 +28,8 @@ public class MovieService {
 
     //get movie by ID
     public Movie getMovieById(Integer id){
-        return movieRepository.findById(id).orElse(null);
+        return movieRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Movie with ID not found!!"));
     }
 
     //Delete movie by ID
@@ -38,7 +39,8 @@ public class MovieService {
 
     //Custom query: find by name
     public Movie findByName(String name){
-        return movieRepository.getMovieByMovieName(name);
+        return movieRepository.getMovieByMovieName(name)
+                .orElseThrow(() -> new RuntimeException("Movie with the given name not found!!"));
     }
 
 }

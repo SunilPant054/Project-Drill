@@ -27,7 +27,7 @@ public class MovieController {
 
     // get movie by id
     @GetMapping("/movies/{id}")
-    public ResponseEntity<Movie> getEmployee(@PathVariable int id){
+    public ResponseEntity<Movie> getMovie(@PathVariable int id){
         Movie movie = movieService.getMovieById(id);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
@@ -47,7 +47,7 @@ public class MovieController {
     }
 
     //find movie by name
-    @GetMapping("movies/name/{name}")
+    @GetMapping("movies/movie/{name}")
     public ResponseEntity<Movie> getMovieByName(@PathVariable String name){
         Movie movie = movieService.findByName(name);
         return new ResponseEntity<>(movie, HttpStatus.OK);
