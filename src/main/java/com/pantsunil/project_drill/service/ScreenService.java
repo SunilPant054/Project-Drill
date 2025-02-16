@@ -2,6 +2,7 @@ package com.pantsunil.project_drill.service;
 
 
 import com.pantsunil.project_drill.entity.Screen;
+import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.ScreenRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class ScreenService {
 
     public Screen getScreenById(Integer id){
         return screenRepository.findById(id)
-                .orElseThrow( () -> new RuntimeException("Screen by the given id Not Found!!"));
+                .orElseThrow( () -> new IdNotFoundException("Screen by the given id Not Found!!"));
     }
 
     public void deleteHall(Integer id){

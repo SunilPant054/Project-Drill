@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name="movies")
@@ -26,6 +27,10 @@ public class Movie {
     @Column(name = "description")
     private String movieDescription;
 
+    //relation
+    @OneToMany(mappedBy = "movie")
+    private List<Show> shows;
+
     //constructor
     public Movie() {
 
@@ -40,6 +45,14 @@ public class Movie {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public List<Show> getShows() {
+        return shows;
+    }
+
+    public void setShows(List<Show> shows) {
+        this.shows = shows;
     }
 
     public String getMovieName() {
@@ -75,15 +88,15 @@ public class Movie {
     }
 
     //toString method
-
     @Override
     public String toString() {
-        return "movies{" +
+        return "Movie{" +
                 "id=" + id +
                 ", movieName='" + movieName + '\'' +
                 ", movieStartTime=" + movieStartTime +
                 ", movieEndTime=" + movieEndTime +
-                ", movieDescription=" + movieDescription +
+                ", movieDescription='" + movieDescription + '\'' +
+                ", shows=" + shows +
                 '}';
     }
 }

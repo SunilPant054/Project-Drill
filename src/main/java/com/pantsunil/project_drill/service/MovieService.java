@@ -1,6 +1,7 @@
 package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.entity.Movie;
+import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.MovieRepository;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +30,7 @@ public class MovieService {
     //get movie by ID
     public Movie getMovieById(Integer id){
         return movieRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("Movie with ID not found!!"));
+                .orElseThrow(()-> new IdNotFoundException("Movie with ID not found!!"));
     }
 
     //Delete movie by ID

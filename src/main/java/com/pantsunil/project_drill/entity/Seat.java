@@ -1,9 +1,9 @@
 package com.pantsunil.project_drill.entity;
 
 import jakarta.persistence.*;
-import org.springframework.stereotype.Component;
 
 @Entity
+@Table(name = "seats")
 public class Seat {
 
     @Id
@@ -18,19 +18,22 @@ public class Seat {
     private int column;
 
 
-    //bidirectional relation with Screen
+    //bidirectional relation with screen
     @ManyToOne
     @JoinColumn(name = "screen_id", referencedColumnName = "id")
     private Screen screen;
 
-    //Constructor
+    //bidirectional relation with ticket
+    @ManyToOne
+    @JoinColumn(name = "ticket_id")
+    private Ticket ticket;
 
+    //constructor
     public Seat() {
+
     }
 
-
-    //Getters and Setters
-
+    //getters and setters
     public int getId() {
         return id;
     }
@@ -55,12 +58,21 @@ public class Seat {
         this.column = column;
     }
 
+
     public Screen getScreen() {
         return screen;
     }
 
     public void setScreen(Screen screen) {
         this.screen = screen;
+    }
+
+    public Ticket getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(Ticket ticket) {
+        this.ticket = ticket;
     }
 
     //toString method
@@ -71,6 +83,7 @@ public class Seat {
                 ", row=" + row +
                 ", column=" + column +
                 ", screen=" + screen +
+                ", ticket=" + ticket +
                 '}';
     }
 }

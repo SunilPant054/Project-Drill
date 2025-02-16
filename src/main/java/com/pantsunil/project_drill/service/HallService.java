@@ -1,6 +1,7 @@
 package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.entity.Hall;
+import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.HallRepository;
 import org.springframework.stereotype.Service;
 
@@ -26,7 +27,7 @@ public class HallService {
 
     public Hall getHallById(Integer id){
         return hallRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Hall with the given id not found!!"));
+                .orElseThrow(() -> new IdNotFoundException("Hall with the given id not found!!"));
     }
 
     public void deleteHall(Integer id){

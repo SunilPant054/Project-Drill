@@ -1,6 +1,7 @@
 package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.entity.Seat;
+import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.SeatRepository;
 import org.springframework.stereotype.Service;
 
@@ -28,7 +29,7 @@ public class SeatService {
 
     public Seat getSeatById(Integer id){
         return seatRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Seat with particular id is Not Found!!"));
+                .orElseThrow(() -> new IdNotFoundException("Seat with particular id is Not Found!!"));
     }
 
     public void deleteSeat(Integer id){

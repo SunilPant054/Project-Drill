@@ -40,14 +40,14 @@ public class MovieController {
     }
 
     // delete a movie
-    @DeleteMapping("/movies/{id}")
-    public ResponseEntity<Void> deleteMovie(@PathVariable int id){
+    @DeleteMapping("/movies")
+    public ResponseEntity<Void> deleteMovie(@RequestBody int id){
         movieService.deleteMovie(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     //find movie by name
-    @GetMapping("movies/movie/{name}")
+    @GetMapping("movies/{name}")
     public ResponseEntity<Movie> getMovieByName(@PathVariable String name){
         Movie movie = movieService.findByName(name);
         return new ResponseEntity<>(movie, HttpStatus.OK);

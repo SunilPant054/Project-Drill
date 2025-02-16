@@ -2,7 +2,6 @@ package com.pantsunil.project_drill.controller;
 
 import com.pantsunil.project_drill.entity.Seat;
 import com.pantsunil.project_drill.service.SeatService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
