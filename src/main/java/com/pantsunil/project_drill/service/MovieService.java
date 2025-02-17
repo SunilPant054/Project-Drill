@@ -1,5 +1,6 @@
 package com.pantsunil.project_drill.service;
 
+import com.pantsunil.project_drill.dto.MovieRequestDTO;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.MovieRepository;
@@ -18,7 +19,13 @@ public class MovieService {
     }
 
     //save a movie
-    public Movie saveMovie(Movie movie){
+    public Movie saveMovie(MovieRequestDTO movieDTO){
+        //mapping movieDTO to movie
+        Movie movie = new Movie();
+        movie.setMovieName(movieDTO.getMovieName());
+        movie.setMovieStartTime(movieDTO.getMovieStartDateTime());
+        movie.setMovieEndTime(movieDTO.getMovieEndDateTime());
+        movie.setMovieDescription(movieDTO.getMovieDescription());
         return movieRepository.save(movie);
     }
 

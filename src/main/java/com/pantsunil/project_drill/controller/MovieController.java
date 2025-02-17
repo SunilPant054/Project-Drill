@@ -1,5 +1,6 @@
 package com.pantsunil.project_drill.controller;
 
+import com.pantsunil.project_drill.dto.MovieRequestDTO;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.service.MovieService;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class MovieController {
 
     // create a movie
     @PostMapping("/movies")
-    public ResponseEntity<Movie> createMovie(@RequestBody Movie movie){
+    public ResponseEntity<Movie> createMovie(@RequestBody MovieRequestDTO movie){
         Movie savedMovie = movieService.saveMovie(movie);
         return new ResponseEntity<>(savedMovie, HttpStatus.OK);
     }

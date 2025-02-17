@@ -1,8 +1,6 @@
 package com.pantsunil.project_drill.entity;
 
 import jakarta.persistence.*;
-
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -18,11 +16,11 @@ public class Movie {
     @Column(name = "movie_name")
     private String movieName;
 
-    @Column(name = "movie_start_time")
-    private LocalDateTime movieStartTime;
+    @Column(name = "movie_start_date_time")
+    private LocalDateTime movieStartDateTime;
 
-    @Column(name = "movie_end_time")
-    private LocalDateTime movieEndTime;
+    @Column(name = "movie_end_date_time")
+    private LocalDateTime movieEndDateTime;
 
     @Column(name = "description")
     private String movieDescription;
@@ -64,19 +62,19 @@ public class Movie {
     }
 
     public LocalDateTime getMovieStartTime() {
-        return movieStartTime;
+        return movieStartDateTime;
     }
 
-    public void setMovieStartTime(LocalDateTime movieStartTime) {
-        this.movieStartTime = movieStartTime;
+    public void setMovieStartTime(LocalDateTime movieStartDateTime) {
+        this.movieStartDateTime = movieStartDateTime;
     }
 
     public LocalDateTime getMovieEndTime() {
-        return movieEndTime;
+        return movieEndDateTime;
     }
 
-    public void setMovieEndTime(LocalDateTime movieEndTime) {
-        this.movieEndTime = movieEndTime;
+    public void setMovieEndTime(LocalDateTime movieEndDateTime) {
+        this.movieEndDateTime = movieEndDateTime;
     }
 
     public String getMovieDescription() {
@@ -93,8 +91,8 @@ public class Movie {
         return "Movie{" +
                 "id=" + id +
                 ", movieName='" + movieName + '\'' +
-                ", movieStartTime=" + movieStartTime +
-                ", movieEndTime=" + movieEndTime +
+                ", movieStartTime=" + movieStartDateTime +
+                ", movieEndTime=" + movieEndDateTime +
                 ", movieDescription='" + movieDescription + '\'' +
                 ", shows=" + shows +
                 '}';

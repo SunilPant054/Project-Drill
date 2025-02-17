@@ -19,7 +19,7 @@ public class Show {
     @Column(name = "start_time")
     private LocalDateTime startTime;
 
-    @Column(name = "date_time")
+    @Column(name = "end_time")
     private LocalDateTime endTime;
 
     //Bidirectional Relationship
