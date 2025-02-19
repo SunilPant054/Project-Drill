@@ -1,8 +1,11 @@
 package com.pantsunil.project_drill.controller;
 
 import com.pantsunil.project_drill.entity.Hall;
+
+import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.service.HallService;
-import org.apache.coyote.Response;
+
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +47,16 @@ public class HallController {
     public ResponseEntity<Void> deleteHall(@PathVariable int id){
         hallService.deleteHall(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    //custom query:: get movies by hall name
+    @GetMapping("halls/{hallName}/movie")
+    public ResponseEntity<Page<Movie>> getMoviesByHallName(
+            @RequestParam(value = "hallName", defaultValue = "", required = false) String hallName,
+            @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
+            @RequestParam(value = "pageSize", defaultValue = ""+Integer.MAX_VALUE, required = false) int pageSize){
+        Page<Movie> movieByHallName = hallService.getMoviesByHallName(hallName, pageNo, pageSize);
+        return new ResponseEntity<>(movieByHallName, HttpStatus.OK);
     }
 
 }

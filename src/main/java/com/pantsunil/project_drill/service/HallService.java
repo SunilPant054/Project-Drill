@@ -1,8 +1,12 @@
 package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.entity.Hall;
+import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.HallRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -33,4 +37,12 @@ public class HallService {
     public void deleteHall(Integer id){
         hallRepository.deleteById(id);
     }
+
+    //get movie by hallname
+    public Page<Movie> getMoviesByHallName(String hallName, int pageNo, int pageSize){
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return hallRepository.getMovieByHallName(hallName, pageable);
+    }
+
+
 }

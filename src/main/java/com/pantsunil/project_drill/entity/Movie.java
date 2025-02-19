@@ -29,6 +29,10 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<Show> shows;
 
+    //relation
+    @OneToMany(mappedBy = "movie")
+    private List<MovieHall> movieHalls;
+
     //constructor
     public Movie() {
 

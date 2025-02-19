@@ -23,6 +23,10 @@ public class Hall {
     @OneToMany(mappedBy = "hall")
     private List<Screen> screens;
 
+    //relation
+    @OneToMany(mappedBy = "hall")
+    private List<MovieHall> movieHalls;
+
     //constructor
     public Hall() {
 
