@@ -41,7 +41,9 @@ public class MovieService {
     }
 
     //Delete movie by ID
-    public void deleteMovie(Integer id){
+    public void deleteMovie(MovieRequestDTO movieRequestDTO){
+        Movie movie = new Movie();
+        int id = movieRequestDTO.getId();
         movieRepository.deleteById(id);
     }
 

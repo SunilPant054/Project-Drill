@@ -6,6 +6,9 @@ import java.time.LocalDateTime;
 
 public class MovieRequestDTO {
 
+    @JsonProperty(value = "id")
+    private int id;
+
     @JsonProperty(value = "movieName")
     private String movieName;
 
@@ -23,6 +26,15 @@ public class MovieRequestDTO {
     }
 
     //getter and setter
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getMovieName() {
         return movieName;
     }

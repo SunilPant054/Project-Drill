@@ -1,15 +1,18 @@
 package com.pantsunil.project_drill.controller;
 
+import com.pantsunil.project_drill.dto.MovieByHallRequestDTO;
 import com.pantsunil.project_drill.entity.Hall;
 
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.service.HallService;
+
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -50,13 +53,12 @@ public class HallController {
     }
 
     //custom query:: get movies by hall name
-    @GetMapping("halls/{hallName}/movie")
+    @GetMapping("halls/movie")
     public ResponseEntity<Page<Movie>> getMoviesByHallName(
-            @RequestParam(value = "hallName", defaultValue = "", required = false) String hallName,
+            @RequestBody MovieByHallRequestDTO movieByHallRequestDTO,
             @RequestParam(value = "pageNo", defaultValue = "0", required = false) int pageNo,
             @RequestParam(value = "pageSize", defaultValue = ""+Integer.MAX_VALUE, required = false) int pageSize){
-        Page<Movie> movieByHallName = hallService.getMoviesByHallName(hallName, pageNo, pageSize);
-        return new ResponseEntity<>(movieByHallName, HttpStatus.OK);
+        Page<Movie> movieByHall = hallService.getMoviesByHall(movieByHallRequestDTO, pageNo, pageSize);
+        return new ResponseEntity<>(movieByHall, HttpStatus.OK);
     }
-
 }

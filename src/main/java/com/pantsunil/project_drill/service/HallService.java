@@ -1,5 +1,6 @@
 package com.pantsunil.project_drill.service;
 
+import com.pantsunil.project_drill.dto.MovieByHallRequestDTO;
 import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
@@ -9,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -38,11 +40,32 @@ public class HallService {
         hallRepository.deleteById(id);
     }
 
-    //get movie by hallname
-    public Page<Movie> getMoviesByHallName(String hallName, int pageNo, int pageSize){
+    //Custom Query :: get movie by hallname
+    private Page<Movie> getMoviesByHallName(String hallName, int pageNo, int pageSize){
         Pageable pageable = PageRequest.of(pageNo, pageSize);
         return hallRepository.getMovieByHallName(hallName, pageable);
     }
 
+    //Custom Query :: get movie by hallname and date filter
+    private Page<Movie> getMoviesByHallNameAndDate(String hallName,
+                                                  LocalDateTime startDate,
+                                                  LocalDateTime endDate,
+                                                  int pageNo,
+                                                  int pageSize){
+        Pageable pageable = PageRequest.of(pageNo, pageSize);
+        return hallRepository.getMovieByHallNameAndDate(hallName, startDate, endDate, pageable);
+    }
+
+    public Page<Movie> getMoviesByHall(MovieByHallRequestDTO movieByHallRequestDTO, int pageNo, int pageSize){
+        if (movieByHallRequestDTO.startDate() != null && movieByHallRequestDTO.endDate() != null) {
+            return getMoviesByHallNameAndDate(movieByHallRequestDTO.hallName(),
+                    movieByHallRequestDTO.startDate(),
+                    movieByHallRequestDTO.endDate(),
+                    pageNo, pageSize);
+        }
+        else{
+            return getMoviesByHallName(movieByHallRequestDTO.hallName(), pageNo, pageSize);
+        }
+    }
 
 }

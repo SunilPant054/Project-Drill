@@ -42,8 +42,8 @@ public class MovieController {
 
     // delete a movie
     @DeleteMapping("/movies")
-    public ResponseEntity<Void> deleteMovie(@RequestBody int id){
-        movieService.deleteMovie(id);
+    public ResponseEntity<Void> deleteMovie(@RequestBody MovieRequestDTO idRequest){
+        movieService.deleteMovie(idRequest);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
