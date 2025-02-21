@@ -1,10 +1,14 @@
 package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.dto.MovieByHallRequestDTO;
+import com.pantsunil.project_drill.dto.MovieRequestDTO;
 import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
+import com.pantsunil.project_drill.entity.MovieHall;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.HallRepository;
+import com.pantsunil.project_drill.respository.MovieHallRepository;
+import com.pantsunil.project_drill.respository.MovieRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;

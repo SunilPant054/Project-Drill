@@ -1,5 +1,6 @@
 package com.pantsunil.project_drill.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -29,6 +30,7 @@ public class Movie {
     @OneToMany(mappedBy = "movie")
     private List<Show> shows;
 
+
     //relation
     @OneToMany(mappedBy = "movie")
     private List<MovieHall> movieHalls;
@@ -55,6 +57,14 @@ public class Movie {
 
     public void setShows(List<Show> shows) {
         this.shows = shows;
+    }
+
+    public List<MovieHall> getMovieHalls() {
+        return movieHalls;
+    }
+
+    public void setMovieHalls(List<MovieHall> movieHalls) {
+        this.movieHalls = movieHalls;
     }
 
     public String getMovieName() {

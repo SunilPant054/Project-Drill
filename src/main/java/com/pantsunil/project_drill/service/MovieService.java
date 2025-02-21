@@ -48,7 +48,7 @@ public class MovieService {
     }
 
     //Custom query: find by name
-    public Movie findByName(String name){
+    public Movie getMovieByName(String name){
         return movieRepository.getMovieByMovieName(name)
                 .orElseThrow(() -> new RuntimeException("Movie with the given name not found!!"));
     }

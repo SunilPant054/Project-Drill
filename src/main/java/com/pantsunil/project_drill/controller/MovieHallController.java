@@ -1,5 +1,8 @@
 package com.pantsunil.project_drill.controller;
 
+import com.pantsunil.project_drill.dto.MovieHallResponseDTO;
+import com.pantsunil.project_drill.dto.MovieRequestDTO;
+import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.entity.MovieHall;
 import com.pantsunil.project_drill.service.MovieHallService;
@@ -22,30 +25,38 @@ public class MovieHallController {
     }
 
     //get all movie hall
-    @GetMapping("/moviehalls")
+    @GetMapping("/movieHalls")
     public ResponseEntity<List<MovieHall>> getMovieHalls(){
         List<MovieHall> movieHalls = movieHallService.getMovieHall();
         return new ResponseEntity<>(movieHalls, HttpStatus.OK);
     }
 
     // get movie hall by id
-    @GetMapping("/moviehalls/{id}")
+    @GetMapping("/movieHalls/{id}")
     public ResponseEntity<MovieHall> getMovieHall(@PathVariable int id){
         MovieHall movieHall = movieHallService.getMovieHallById(id);
         return new ResponseEntity<>(movieHall, HttpStatus.OK);
     }
 
     // create a movie hall
-    @PostMapping("/moviehalls")
+    @PostMapping("/movieHalls")
     public ResponseEntity<MovieHall> createMovieHall(@RequestBody MovieHall movieHall){
         MovieHall savedMovieHall = movieHallService.saveHall(movieHall);
         return new ResponseEntity<>(savedMovieHall, HttpStatus.OK);
     }
 
     //delete a movie hall
-    @DeleteMapping("/moviehalls")
+    @DeleteMapping("/movieHalls")
     public ResponseEntity<Void> deleteMovieHall(@RequestBody int id){
         movieHallService.deleteHall(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    // save a movie in particular hall
+    @PostMapping("movieHalls/{hallId}/movies/{movieName}")
+    public ResponseEntity<MovieHallResponseDTO> saveMovieInHall(@PathVariable int hallId,
+                                                                @PathVariable String movieName){
+        MovieHallResponseDTO savedMovieByHall = movieHallService.saveMovieByHall(hallId, movieName);
+        return new ResponseEntity<>(savedMovieByHall, HttpStatus.OK);
     }
 }
