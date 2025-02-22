@@ -1,18 +1,15 @@
 package com.pantsunil.project_drill.service;
 
+import com.pantsunil.project_drill.dto.HallResponseDTO;
 import com.pantsunil.project_drill.dto.MovieHallResponseDTO;
 import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.entity.MovieHall;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
-import com.pantsunil.project_drill.respository.HallRepository;
 import com.pantsunil.project_drill.respository.MovieHallRepository;
-import com.pantsunil.project_drill.respository.MovieRepository;
 import org.springframework.stereotype.Service;
-
-import javax.swing.text.html.Option;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class MovieHallService {
@@ -50,7 +47,12 @@ public class MovieHallService {
     //save movie by hall id
     public MovieHallResponseDTO saveMovieByHall(int hallId, String movieName){
         Movie movie = movieService.getMovieByName(movieName);
-        Hall hall = hallService.getHallById(hallId);
+        HallResponseDTO hallDto = hallService.getHallById(hallId);
+        Hall hall = new Hall();
+        hall.setId(hallDto.getId());
+        hall.setHallName(hallDto.getHallName());
+        hall.setLocation(hallDto.getLocation());
+
         MovieHall movieHall = new MovieHall();
         movieHall.setMovie(movie);
         movieHall.setHall(hall);
@@ -60,5 +62,15 @@ public class MovieHallService {
                 savedMovieHall.getMovie().getMovieStartTime(),
                 savedMovieHall.getMovie().getMovieEndTime(),
                 savedMovieHall.getMovie().getMovieDescription());
+    }
+
+    //delete movie by hall_id and movieName in movie-halls
+    public void deleteMovieByHall(int hallId, String movieName){
+        Movie movie = movieService.getMovieByName(movieName);
+        MovieHall movieHall = new MovieHall();
+        int movieId = movie.getId();
+        if (movieId == movieHall.getMovie().getId() && hallId == movieHall.getHall().getId()){
+            movieHallRepository.deleteById(movieHall.getId());
+        }
     }
 }

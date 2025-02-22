@@ -59,4 +59,12 @@ public class MovieHallController {
         MovieHallResponseDTO savedMovieByHall = movieHallService.saveMovieByHall(hallId, movieName);
         return new ResponseEntity<>(savedMovieByHall, HttpStatus.OK);
     }
+
+    //delete a movie in particular hall
+    @DeleteMapping("movieHalls/{hallId}/movies/{movieName}")
+    public ResponseEntity<Void> deleteMovieInHall(@PathVariable int hallId,
+                                                  @PathVariable String movieName){
+        movieHallService.deleteMovieByHall(hallId, movieName);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
 }

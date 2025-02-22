@@ -1,14 +1,12 @@
 package com.pantsunil.project_drill.service;
 
+import com.pantsunil.project_drill.dto.HallRequestDTO;
+import com.pantsunil.project_drill.dto.HallResponseDTO;
 import com.pantsunil.project_drill.dto.MovieByHallRequestDTO;
-import com.pantsunil.project_drill.dto.MovieRequestDTO;
 import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
-import com.pantsunil.project_drill.entity.MovieHall;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.HallRepository;
-import com.pantsunil.project_drill.respository.MovieHallRepository;
-import com.pantsunil.project_drill.respository.MovieRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class HallService {
@@ -27,17 +26,44 @@ public class HallService {
         this.hallRepository = hallRepository;
     }
 
-    public Hall saveHall(Hall hall){
-        return hallRepository.save(hall);
+    public HallResponseDTO saveHall(HallRequestDTO hallRequestDTO){
+        Hall hall = new Hall();
+        hall.setHallName(hallRequestDTO.getHallName());
+        hall.setLocation(hallRequestDTO.getLocation());
+
+        Hall savedHall =  hallRepository.save(hall);
+
+        HallResponseDTO hallResponseDTO = new HallResponseDTO();
+        hallResponseDTO.setId(savedHall.getId());
+        hallResponseDTO.setHallName(savedHall.getHallName());
+        hallResponseDTO.setLocation(savedHall.getLocation());
+
+        return hallResponseDTO;
+
     }
 
-    public List<Hall> getAllHalls(){
-        return hallRepository.findAll();
+    public List<HallResponseDTO> getAllHalls(){
+        List<Hall> halls = hallRepository.findAll();
+        List<HallResponseDTO> hallDto = halls.stream()
+                .map(hall -> {
+                    HallResponseDTO dto = new HallResponseDTO();
+                    dto.setId(hall.getId());
+                    dto.setHallName(hall.getHallName());
+                    dto.setLocation(hall.getLocation());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+        return hallDto;
     }
 
-    public Hall getHallById(Integer id){
-        return hallRepository.findById(id)
+    public HallResponseDTO getHallById(Integer id){
+        Hall hall = hallRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundException("Hall with the given id not found!!"));
+        HallResponseDTO hallResponseDTO = new HallResponseDTO();
+        hallResponseDTO.setId(hall.getId());
+        hallResponseDTO.setHallName(hall.getHallName());
+        hallResponseDTO.setLocation(hall.getLocation());
+        return hallResponseDTO;
     }
 
     public void deleteHall(Integer id){

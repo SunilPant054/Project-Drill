@@ -1,8 +1,8 @@
 package com.pantsunil.project_drill.controller;
 
+import com.pantsunil.project_drill.dto.HallRequestDTO;
+import com.pantsunil.project_drill.dto.HallResponseDTO;
 import com.pantsunil.project_drill.dto.MovieByHallRequestDTO;
-import com.pantsunil.project_drill.dto.MovieRequestDTO;
-import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.service.HallService;
 import org.springframework.data.domain.Page;
@@ -24,21 +24,22 @@ public class HallController {
 
     //get all hall
     @GetMapping("/halls")
-    public ResponseEntity<List<Hall>> getHalls(){
-        List<Hall> halls = hallService.getAllHalls();
+    public ResponseEntity<List<HallResponseDTO>> getHalls(){
+        List<HallResponseDTO> halls = hallService.getAllHalls();
         return new ResponseEntity<>(halls, HttpStatus.OK);
     }
 
     //get a hall by id
-    public ResponseEntity<Hall> getHall(@PathVariable int id){
-        Hall hall = hallService.getHallById(id);
-        return new ResponseEntity<>(hall, HttpStatus.OK);
+    @GetMapping("/halls/{id}")
+    public ResponseEntity<HallResponseDTO> getHall(@PathVariable int id){
+        HallResponseDTO hallDto = hallService.getHallById(id);
+        return new ResponseEntity<>(hallDto, HttpStatus.OK);
     }
 
     //create a hall
     @PostMapping("/halls")
-    public ResponseEntity<Hall> createHall(@RequestBody Hall hall){
-        Hall savedHall = hallService.saveHall(hall);
+    public ResponseEntity<HallResponseDTO> createHall(@RequestBody HallRequestDTO hallRequestDTO){
+        HallResponseDTO savedHall = hallService.saveHall(hallRequestDTO);
         return new ResponseEntity<>(savedHall, HttpStatus.OK);
     }
 
