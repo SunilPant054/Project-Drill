@@ -1,18 +1,18 @@
 package com.pantsunil.project_drill.service;
 
-import com.pantsunil.project_drill.dto.HallRequestDTO;
-import com.pantsunil.project_drill.dto.HallResponseDTO;
-import com.pantsunil.project_drill.dto.MovieByHallRequestDTO;
+import com.pantsunil.project_drill.dto.*;
 import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.HallRepository;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -71,22 +71,69 @@ public class HallService {
     }
 
     //Custom Query :: get movie by hallname
-    private Page<Movie> getMoviesByHallName(String hallName, int pageNo, int pageSize){
+    private MovieByHallNamePageResponseDTO getMoviesByHallName(String hallName, int pageNo, int pageSize){
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        return hallRepository.getMovieByHallName(hallName, pageable);
+        Page<Movie> pagedMovies = hallRepository.getMovieByHallName(hallName, pageable);
+
+        //Mapping Movie pages into a list of movies dto
+        List<MovieByHallPageResponseDTO> moviesPagedList = pagedMovies.stream()
+                .map(movie -> {
+                    MovieByHallPageResponseDTO dto = new MovieByHallPageResponseDTO();
+                    dto.setMovieId(movie.getId());
+                    dto.setMovieName(movie.getMovieName());
+                    dto.setMovieDescription(movie.getMovieDescription());
+                    dto.setMovieStartTime(movie.getMovieStartTime());
+                    dto.setMovieEndTime(movie.getMovieEndTime());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        //Mapping list of movies to moviepageresponse dto
+        MovieByHallNamePageResponseDTO movieByHallNamePageResponseDTO = new MovieByHallNamePageResponseDTO();
+        movieByHallNamePageResponseDTO.setPagedMovies(moviesPagedList);
+        movieByHallNamePageResponseDTO.setSize(pagedMovies.getSize());
+        movieByHallNamePageResponseDTO.setTotalPages(pagedMovies.getTotalPages());
+        movieByHallNamePageResponseDTO.setTotalElements(pagedMovies.getTotalElements());
+
+
+        return movieByHallNamePageResponseDTO;
+
     }
 
     //Custom Query :: get movie by hallname and date filter
-    private Page<Movie> getMoviesByHallNameAndDate(String hallName,
-                                                  LocalDateTime startDate,
-                                                  LocalDateTime endDate,
-                                                  int pageNo,
-                                                  int pageSize){
+    private MovieByHallNamePageResponseDTO getMoviesByHallNameAndDate(String hallName,
+                                                   LocalDateTime startDate,
+                                                   LocalDateTime endDate,
+                                                   int pageNo,
+                                                   int pageSize){
         Pageable pageable = PageRequest.of(pageNo, pageSize);
-        return hallRepository.getMovieByHallNameAndDate(hallName, startDate, endDate, pageable);
+        Page<Movie> pagedMovies = hallRepository.getMovieByHallNameAndDate(hallName, startDate, endDate, pageable);
+
+        //Mapping Movie pages into list of movies dto
+        List<MovieByHallPageResponseDTO> moviePageList = pagedMovies.stream()
+                .map(movie -> {
+                    MovieByHallPageResponseDTO dto = new MovieByHallPageResponseDTO();
+                    dto.setMovieId(movie.getId());
+                    dto.setMovieName(movie.getMovieName());
+                    dto.setMovieDescription(movie.getMovieDescription());
+                    dto.setMovieStartTime(movie.getMovieStartTime());
+                    dto.setMovieEndTime(movie.getMovieEndTime());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        //Mapping list of movies to moviepageresponse dto
+        MovieByHallNamePageResponseDTO movieByHallNamePageResponseDTO = new MovieByHallNamePageResponseDTO();
+        movieByHallNamePageResponseDTO.setPagedMovies(moviePageList);
+        movieByHallNamePageResponseDTO.setSize(pagedMovies.getSize());
+        movieByHallNamePageResponseDTO.setTotalPages(pagedMovies.getTotalPages());
+        movieByHallNamePageResponseDTO.setTotalElements(pagedMovies.getTotalElements());
+
+
+        return movieByHallNamePageResponseDTO;
     }
 
-    public Page<Movie> getMoviesByHall(MovieByHallRequestDTO movieByHallRequestDTO, int pageNo, int pageSize){
+    public MovieByHallNamePageResponseDTO getMoviesByHall(MovieByHallRequestDTO movieByHallRequestDTO, int pageNo, int pageSize){
         if (movieByHallRequestDTO.startDate() != null && movieByHallRequestDTO.endDate() != null) {
             return getMoviesByHallNameAndDate(movieByHallRequestDTO.hallName(),
                     movieByHallRequestDTO.startDate(),
@@ -96,6 +143,7 @@ public class HallService {
         else{
             return getMoviesByHallName(movieByHallRequestDTO.hallName(), pageNo, pageSize);
         }
+
     }
 
 }
