@@ -1,9 +1,10 @@
 package com.pantsunil.project_drill.controller;
 
-import com.pantsunil.project_drill.dto.*;
-import com.pantsunil.project_drill.entity.Movie;
+import com.pantsunil.project_drill.dto.halldtos.HallRequestDTO;
+import com.pantsunil.project_drill.dto.halldtos.HallResponseDTO;
+import com.pantsunil.project_drill.dto.moviehalldtos.MovieByHallNamePageResponseDTO;
+import com.pantsunil.project_drill.dto.moviehalldtos.MovieByHallRequestDTO;
 import com.pantsunil.project_drill.service.HallService;
-import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +31,7 @@ public class HallController {
     //get a hall by id
     @GetMapping("/halls/{id}")
     public ResponseEntity<HallResponseDTO> getHall(@PathVariable int id){
-        HallResponseDTO hallDto = hallService.getHallById(id);
+        HallResponseDTO hallDto = hallService.getHallDTOById(id);
         return new ResponseEntity<>(hallDto, HttpStatus.OK);
     }
 

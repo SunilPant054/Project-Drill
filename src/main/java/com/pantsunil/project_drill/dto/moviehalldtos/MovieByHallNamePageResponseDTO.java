@@ -1,4 +1,4 @@
-package com.pantsunil.project_drill.dto;
+package com.pantsunil.project_drill.dto.moviehalldtos;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

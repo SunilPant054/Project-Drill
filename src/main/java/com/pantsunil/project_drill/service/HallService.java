@@ -1,18 +1,20 @@
 package com.pantsunil.project_drill.service;
 
-import com.pantsunil.project_drill.dto.*;
+import com.pantsunil.project_drill.dto.halldtos.HallRequestDTO;
+import com.pantsunil.project_drill.dto.halldtos.HallResponseDTO;
+import com.pantsunil.project_drill.dto.moviehalldtos.MovieByHallNamePageResponseDTO;
+import com.pantsunil.project_drill.dto.moviehalldtos.MovieByHallPageResponseDTO;
+import com.pantsunil.project_drill.dto.moviehalldtos.MovieByHallRequestDTO;
 import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.HallRepository;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -56,14 +58,19 @@ public class HallService {
         return hallDto;
     }
 
-    public HallResponseDTO getHallById(Integer id){
-        Hall hall = hallRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundException("Hall with the given id not found!!"));
+    public HallResponseDTO getHallDTOById(Integer id){
+        Hall hall = getHallById(id);
+
         HallResponseDTO hallResponseDTO = new HallResponseDTO();
         hallResponseDTO.setId(hall.getId());
         hallResponseDTO.setHallName(hall.getHallName());
         hallResponseDTO.setLocation(hall.getLocation());
         return hallResponseDTO;
+    }
+
+    public Hall getHallById(Integer id){
+        return hallRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("Hall with the given id not found!!"));
     }
 
     public void deleteHall(Integer id){
@@ -128,7 +135,6 @@ public class HallService {
         movieByHallNamePageResponseDTO.setSize(pagedMovies.getSize());
         movieByHallNamePageResponseDTO.setTotalPages(pagedMovies.getTotalPages());
         movieByHallNamePageResponseDTO.setTotalElements(pagedMovies.getTotalElements());
-
 
         return movieByHallNamePageResponseDTO;
     }

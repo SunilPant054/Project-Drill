@@ -1,6 +1,5 @@
-package com.pantsunil.project_drill.dto;
+package com.pantsunil.project_drill.dto.moviehalldtos;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public record MovieByHallRequestDTO(String hallName,

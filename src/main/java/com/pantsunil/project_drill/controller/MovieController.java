@@ -1,6 +1,6 @@
 package com.pantsunil.project_drill.controller;
 
-import com.pantsunil.project_drill.dto.MovieRequestDTO;
+import com.pantsunil.project_drill.dto.moviedtos.MovieDTO;
 import com.pantsunil.project_drill.entity.Movie;
 import com.pantsunil.project_drill.service.MovieService;
 import org.springframework.http.HttpStatus;
@@ -21,36 +21,36 @@ public class MovieController {
 
     // get all movies
     @GetMapping("/movies")
-    public ResponseEntity<List<Movie>> getMovies(){
-        List<Movie> movies = movieService.getAllMovies();
+    public ResponseEntity<List<MovieDTO>> getMovies(){
+        List<MovieDTO> movies = movieService.getAllMovies();
         return new ResponseEntity<>(movies, HttpStatus.OK);
     }
 
     // get movie by id
     @GetMapping("/movies/{id}")
-    public ResponseEntity<Movie> getMovie(@PathVariable int id){
-        Movie movie = movieService.getMovieById(id);
+    public ResponseEntity<MovieDTO> getMovie(@PathVariable int id){
+        MovieDTO movie = movieService.getMovieDTOById(id);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 
     // create a movie
     @PostMapping("/movies")
-    public ResponseEntity<Movie> createMovie(@RequestBody MovieRequestDTO movie){
-        Movie savedMovie = movieService.saveMovie(movie);
+    public ResponseEntity<MovieDTO> createMovie(@RequestBody MovieDTO movie){
+        MovieDTO savedMovie = movieService.saveMovie(movie);
         return new ResponseEntity<>(savedMovie, HttpStatus.OK);
     }
 
     // delete a movie
     @DeleteMapping("/movies")
-    public ResponseEntity<Void> deleteMovie(@RequestBody MovieRequestDTO idRequest){
-        movieService.deleteMovie(idRequest);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<Void> deleteMovie(@RequestBody MovieDTO id){
+        movieService.deleteMovie(id);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    //find movie by name
-    @GetMapping("movies/{name}")
-    public ResponseEntity<Movie> getMovieByName(@PathVariable String name){
-        Movie movie = movieService.getMovieByName(name);
+//    find movie by name
+    @GetMapping("/movies/movie")
+    public ResponseEntity<MovieDTO> getMovieByName(@RequestParam("movieName") String movieName){
+        MovieDTO movie = movieService.getMovieDTOByName(movieName);
         return new ResponseEntity<>(movie, HttpStatus.OK);
     }
 }

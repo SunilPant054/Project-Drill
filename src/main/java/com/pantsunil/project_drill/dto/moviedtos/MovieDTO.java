@@ -1,27 +1,27 @@
-package com.pantsunil.project_drill.dto;
+package com.pantsunil.project_drill.dto.moviedtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.time.LocalDateTime;
 
-public class MovieRequestDTO {
+public class MovieDTO {
 
-    @JsonProperty(value = "id")
+//    @JsonProperty(value = "id")
     private int id;
 
-    @JsonProperty(value = "movieName")
+//    @JsonProperty(value = "movieName")
     private String movieName;
 
-    @JsonProperty(value = "movieStartDateTime")
+//    @JsonProperty(value = "movieStartDateTime")
     private LocalDateTime movieStartDateTime;
 
-    @JsonProperty(value = "movieEndDateTime")
+//    @JsonProperty(value = "movieEndDateTime")
     private LocalDateTime movieEndDateTime;
 
-    @JsonProperty(value = "movieDescription")
+//    @JsonProperty(value = "movieDescription")
     private String movieDescription;
 
-    public MovieRequestDTO() {
+    public MovieDTO() {
 
     }
 

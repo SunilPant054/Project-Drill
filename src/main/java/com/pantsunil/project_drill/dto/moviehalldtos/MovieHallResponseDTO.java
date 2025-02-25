@@ -1,9 +1,4 @@
-package com.pantsunil.project_drill.dto;
-
-import com.pantsunil.project_drill.entity.Hall;
-import com.pantsunil.project_drill.entity.Movie;
-import lombok.Getter;
-import lombok.Setter;
+package com.pantsunil.project_drill.dto.moviehalldtos;
 
 import java.time.LocalDateTime;
 

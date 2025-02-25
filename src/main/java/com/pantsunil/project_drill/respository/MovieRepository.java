@@ -11,5 +11,5 @@ public interface MovieRepository extends JpaRepository<Movie, Integer> {
     // Inherits methods like save(), findAll(), findById() and so on
 
     //Custom query: Find by name
-    public Optional<Movie> getMovieByMovieName(String name);
+    Optional<Movie> getMovieByMovieName(String name);
 }
