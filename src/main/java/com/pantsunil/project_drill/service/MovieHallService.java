@@ -1,7 +1,5 @@
 package com.pantsunil.project_drill.service;
 
-import com.pantsunil.project_drill.dto.halldtos.HallResponseDTO;
-import com.pantsunil.project_drill.dto.moviedtos.MovieDTO;
 import com.pantsunil.project_drill.dto.moviehalldtos.MovieHallDTO;
 import com.pantsunil.project_drill.dto.moviehalldtos.MovieHallDeleteDTO;
 import com.pantsunil.project_drill.dto.moviehalldtos.MovieHallResponseDTO;
@@ -32,22 +30,21 @@ public class MovieHallService {
     }
 
     public MovieHallDTO saveHall(MovieHallDTO movieHallDTO){
-        int movieId = movieHallDTO.getMovie_id();
+        int movieId = movieHallDTO.getMovieId();
         Movie movie = movieService.getMovieById(movieId);
 
 
-        int hallId = movieHallDTO.getHall_id();
+        int hallId = movieHallDTO.getHallId();
         Hall hall = hallService.getHallById(hallId);
 
         MovieHall movieHall = new MovieHall();
         movieHall.setMovie(movie);
         movieHall.setHall(hall);
-//        movie.setMovieHalls(movie.getMovieHalls().add(movieHall));
         MovieHall savedMovieHall = movieHallRepository.save(movieHall);
 
         MovieHallDTO dto = new MovieHallDTO();
-        dto.setMovie_id(savedMovieHall.getMovie().getId());
-        dto.setHall_id(savedMovieHall.getHall().getId());
+        dto.setMovieId(savedMovieHall.getMovie().getId());
+        dto.setHallId(savedMovieHall.getHall().getId());
 
         return dto;
     }
@@ -59,8 +56,8 @@ public class MovieHallService {
                 .map(movieHall -> {
                     MovieHallDTO dto = new MovieHallDTO();
                     dto.setId(movieHall.getId());
-                    dto.setMovie_id(movieHall.getHall().getId());
-                    dto.setHall_id(movieHall.getMovie().getId());
+                    dto.setMovieId(movieHall.getHall().getId());
+                    dto.setHallId(movieHall.getMovie().getId());
                     return dto;
                 })
                 .collect(Collectors.toList());
@@ -76,8 +73,8 @@ public class MovieHallService {
         MovieHallDTO movieHallDTO = new MovieHallDTO();
 
         movieHallDTO.setId(movieHall.getId());
-        movieHallDTO.setMovie_id(movieHall.getMovie().getId());
-        movieHallDTO.setHall_id(movieHall.getHall().getId());
+        movieHallDTO.setMovieId(movieHall.getMovie().getId());
+        movieHallDTO.setHallId(movieHall.getHall().getId());
 
         return movieHallDTO;
     }
@@ -89,13 +86,8 @@ public class MovieHallService {
 
 //    save movie by hall id
     public MovieHallResponseDTO saveMovieByHall(int hallId, String movieName){
-        MovieDTO movieDTO = movieService.getMovieDTOByName(movieName);
-        Movie movie = new Movie();
-        movie.setId(movieDTO.getId());
-        movie.setMovieName(movieDTO.getMovieName());
-        movie.setMovieDescription(movieDTO.getMovieDescription());
-        movie.setMovieStartTime(movieDTO.getMovieStartDateTime());
-        movie.setMovieEndTime(movieDTO.getMovieEndDateTime());
+
+        Movie movie = movieService.getMovieByName(movieName);
 
         Hall hall = hallService.getHallById(hallId);
 

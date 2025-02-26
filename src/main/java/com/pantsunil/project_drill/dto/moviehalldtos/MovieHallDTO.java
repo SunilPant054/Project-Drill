@@ -9,6 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 public class MovieHallDTO {
     private int id;
-    private int movie_id;
-    private int hall_id;
+    private int movieId;
+    private int hallId;
 }

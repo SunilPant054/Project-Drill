@@ -1,10 +1,10 @@
 package com.pantsunil.project_drill.controller;
 
-import com.pantsunil.project_drill.entity.Show;
+import com.pantsunil.project_drill.dto.showdtos.ShowRequestDTO;
+import com.pantsunil.project_drill.dto.showdtos.ShowResponseDTO;
+import com.pantsunil.project_drill.dto.showdtos.GetShowsByMovieIdDTO;
 import com.pantsunil.project_drill.service.ShowService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,30 +22,39 @@ public class ShowController {
 
     //get all show
     @GetMapping("/shows")
-    public ResponseEntity<List<Show>> getShows(){
-        List<Show> shows = showService.getAllShows();
+    public ResponseEntity<List<ShowResponseDTO>> getShows(){
+        List<ShowResponseDTO> shows = showService.getAllShows();
         return new ResponseEntity<>(shows, HttpStatus.OK);
     }
 
     //get show by id
     @GetMapping("/shows/{id}")
-    public ResponseEntity<Show> getShow(@PathVariable int id){
-        Show show = showService.getShowById(id);
+    public ResponseEntity<ShowResponseDTO> getShow(@PathVariable int id){
+        ShowResponseDTO show = showService.getShowById(id);
         return new ResponseEntity<>(show, HttpStatus.OK);
     }
 
     //create a show
-    @PostMapping("shows")
-    public ResponseEntity<Show> createShow(@RequestBody Show show){
-        Show savedShow = showService.saveShow(show);
-        return new ResponseEntity<>(show, HttpStatus.OK);
+    @PostMapping("/shows")
+    public ResponseEntity<ShowResponseDTO> createShow(@RequestBody ShowRequestDTO showDTO){
+        ShowResponseDTO savedDTO = showService.saveShow(showDTO);
+        return new ResponseEntity<>(savedDTO, HttpStatus.OK);
     }
 
     //delete a show
-    @DeleteMapping("shows/{id}")
+    @DeleteMapping("/shows/{id}")
     public ResponseEntity<Void> deleteShow(@PathVariable int id){
         showService.deleteShow(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
+    //Custom Query: get shows and moviedetails from movie_id
+    @GetMapping("/shows/movies/{movieId}")
+    public ResponseEntity<GetShowsByMovieIdDTO> getShowByMovieId(@PathVariable int movieId){
+        GetShowsByMovieIdDTO showDTO = showService.getShowsByMovieId(movieId);
+        return new ResponseEntity<>(showDTO, HttpStatus.OK);
+    }
+
+
 
 }
