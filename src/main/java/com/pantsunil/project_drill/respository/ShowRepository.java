@@ -24,13 +24,6 @@ public interface ShowRepository extends JpaRepository<Show, Integer> {
             """)
     Show getShowsByMovieId(@Param("movieId") int movieId);
 
-
-//    @Query(value = """
-//            SELECT * FROM shows INNER JOIN movies On shows.movie_id = movies.id
-//            INNER JOIN screens ON shows.screen_id = screens.id
-//            INNER JOIN halls ON shows.hall_id = halls.id
-//            WHERE  shows.movie_id = :movieId AND shows.hall_id = :hallId;
-//            """, nativeQuery = true)
     @Query(value = """
         SELECT
             shows.id,

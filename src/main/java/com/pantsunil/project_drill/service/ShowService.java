@@ -4,14 +4,10 @@ import com.pantsunil.project_drill.dto.moviedtos.MovieDTO;
 import com.pantsunil.project_drill.dto.showdtos.*;
 import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
-import com.pantsunil.project_drill.entity.Screen;
 import com.pantsunil.project_drill.entity.Show;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.ShowRepository;
 import org.springframework.stereotype.Service;
-
-
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,17 +16,14 @@ public class ShowService {
 
     private final ShowRepository showRepository;
     private final MovieService movieService;
-    private final ScreenService screenService;
     private final HallService hallService;
 
     //constructor
     public ShowService(ShowRepository showRepository,
                        MovieService movieService,
-                       ScreenService screenService,
                        HallService hallService){
         this.showRepository = showRepository;
         this.movieService = movieService;
-        this.screenService = screenService;
         this.hallService = hallService;
     }
 
@@ -95,8 +88,7 @@ public class ShowService {
     }
 
     //returns show by id
-    public Show getShowById(int id)
-    {
+    public Show getShowById(int id) {
         return showRepository.findById(id)
                 .orElseThrow(() -> new IdNotFoundException("Show with the given id not found!!"));
     }
