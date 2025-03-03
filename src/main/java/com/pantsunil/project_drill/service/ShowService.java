@@ -135,26 +135,29 @@ public class ShowService {
     }
 
     //get shows details with movidId and hallId
-//    public ShowDetailsDTO getShowDetails(int movieId, int hallId){
-//        ShowDetailsDTO show = showRepository.getShowDetails(movieId, hallId);
-////
-////        Hall hall = new Hall();
-////        hall.setId(show.getHallId());
-////        hall.setHallName(show.get);
-////        ShowDetailsDTO showDetailsDTO = new ShowDetailsDTO();
-//
-////        int screenId = showRepository.getShowsByMovieId(movieId).getScreenID();
-////        Screen screen = screenService.getScreenById(screenId);
-//
-////        showDetailsDTO.setId(show.getId());
-////        showDetailsDTO.setHall(hallService.getHallById(hallId));
-////        showDetailsDTO.setScreen(screenService.getScreenById(show.getScreenID()));
-////        showDetailsDTO.setMovie(movieService.getMovieById(movieId));
-////        showDetailsDTO.setStartTime(show.getStartTime());
-////        showDetailsDTO.setEndTime(show.getEndTime());
-//
-//        return show;
-//    }
+    public List<ShowDetailsFinalDTO> getShowDetails(int movieId, int hallId){
+        List<ShowDetailsDTO> shows = showRepository.getShowDetails(movieId, hallId);
+
+        List<ShowDetailsFinalDTO> showDetailsFinalDTO = shows.stream()
+                .map(show -> {
+                    ShowDetailsFinalDTO dto = new ShowDetailsFinalDTO();
+                    dto.setShowId(show.getId());
+                    dto.setHallId(show.getHallId());
+                    dto.setHallLocation(show.getHallLocation());
+                    dto.setHallName(show.getHallName());
+                    dto.setScreenId(show.getScreenId());
+                    dto.setMovieId(show.getMovieId());
+                    dto.setMovieName(show.getMovieName());
+                    dto.setMovieDescription(show.getMovieDescription());
+                    dto.setNumberOfSeats(show.getNumberOfSeats());
+                    dto.setShowStartTime(show.getShowStartTime());
+                    dto.setShowEndTime(show.getShowEndTime());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return showDetailsFinalDTO;
+    }
 
     //get available show tickets
     public List<AvailableShowTicketDTO> getAvailableTickets(int showId){

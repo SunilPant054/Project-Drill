@@ -31,34 +31,34 @@ public interface ShowRepository extends JpaRepository<Show, Integer> {
 //            INNER JOIN halls ON shows.hall_id = halls.id
 //            WHERE  shows.movie_id = :movieId AND shows.hall_id = :hallId;
 //            """, nativeQuery = true)
-//    @Query(value = """
-//        SELECT
-//            shows.id,
-//            shows.movie_id AS showMovieId,
-//            shows.screen_id AS showScreenId,
-//            shows.start_time AS showStartTime,
-//            shows.end_time AS showEndTime,
-//            shows.hall_id AS showHallId,
-//            movies.id AS movieId,
-//            movies.movie_name AS movieName,
-//            movies.movie_start_date_time AS movieStartTime,
-//            movies.movie_end_date_time AS movieEndTime,
-//            movies.description AS movieDescription,
-//            screens.id AS screenId,
-//            screens.number_of_seats AS numberOfSeats,
-//            screens.hall_id AS screenHallId,
-//            halls.id AS hallId,
-//            halls.hall_name AS hallName,
-//            halls.location AS hallLocation
-//        FROM shows
-//        INNER JOIN movies ON shows.movie_id = movies.id
-//        INNER JOIN screens ON shows.screen_id = screens.id
-//        INNER JOIN halls ON shows.hall_id = halls.id
-//        WHERE shows.movie_id = :movieId AND shows.hall_id = :hallId;
-//    """, nativeQuery = true)
-//    ShowDetailsDTO getShowDetails(@Param("movieId") int movieId,
-//                                  @Param("hallId") int hallId);
-//
+    @Query(value = """
+        SELECT
+            shows.id,
+            shows.movie_id AS showMovieId,
+            shows.screen_id AS showScreenId,
+            shows.start_time AS showStartTime,
+            shows.end_time AS showEndTime,
+            shows.hall_id AS showHallId,
+            movies.id AS movieId,
+            movies.movie_name AS movieName,
+            movies.movie_start_date_time AS movieStartTime,
+            movies.movie_end_date_time AS movieEndTime,
+            movies.description AS movieDescription,
+            screens.id AS screenId,
+            screens.number_of_seats AS numberOfSeats,
+            screens.hall_id AS screenHallId,
+            halls.id AS hallId,
+            halls.hall_name AS hallName,
+            halls.location AS hallLocation
+        FROM shows
+        INNER JOIN movies ON shows.movie_id = movies.id
+        INNER JOIN screens ON shows.screen_id = screens.id
+        INNER JOIN halls ON shows.hall_id = halls.id
+        WHERE shows.movie_id = :movieId AND shows.hall_id = :hallId;
+    """, nativeQuery = true)
+    List<ShowDetailsDTO> getShowDetails(@Param("movieId") int movieId,
+                                  @Param("hallId") int hallId);
+
 
     //get available tickets for shows with show_id
     @Query(value = """

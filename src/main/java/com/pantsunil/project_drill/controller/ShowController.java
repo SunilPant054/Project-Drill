@@ -53,14 +53,14 @@ public class ShowController {
         return new ResponseEntity<>(showDTO, HttpStatus.OK);
     }
 
-    //get shows with movieId and hallId
-//    @GetMapping("/shows/movies/{movieId}/halls/{hallId}")
-//    public ResponseEntity<ShowDetailsDTO> getShowsDetails(@PathVariable int movieId,
-//                                                          @PathVariable int hallId)
-//    {
-//        ShowDetailsDTO showDetailsDTO = showService.getShowDetails(movieId, hallId);
-//        return new ResponseEntity<>(showDetailsDTO, HttpStatus.OK);
-//    }
+//    get shows details with movieId and hallId
+    @GetMapping("/shows/movies/{movieId}/halls/{hallId}")
+    public ResponseEntity<List<ShowDetailsFinalDTO>> getShowsDetails(@PathVariable int movieId,
+                                                          @PathVariable int hallId)
+    {
+        List<ShowDetailsFinalDTO> showDetailsDTO = showService.getShowDetails(movieId, hallId);
+        return new ResponseEntity<>(showDetailsDTO, HttpStatus.OK);
+    }
 
     //get available show tickets
     @GetMapping("/shows/{showId}/tickets")
