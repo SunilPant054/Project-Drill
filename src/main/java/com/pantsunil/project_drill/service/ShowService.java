@@ -1,15 +1,17 @@
 package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.dto.moviedtos.MovieDTO;
-import com.pantsunil.project_drill.dto.showdtos.ShowRequestDTO;
-import com.pantsunil.project_drill.dto.showdtos.ShowResponseDTO;
-import com.pantsunil.project_drill.dto.showdtos.GetShowsByMovieIdDTO;
+import com.pantsunil.project_drill.dto.showdtos.*;
+import com.pantsunil.project_drill.entity.Hall;
 import com.pantsunil.project_drill.entity.Movie;
+import com.pantsunil.project_drill.entity.Screen;
 import com.pantsunil.project_drill.entity.Show;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
 import com.pantsunil.project_drill.respository.ShowRepository;
 import org.springframework.stereotype.Service;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,12 +20,18 @@ public class ShowService {
 
     private final ShowRepository showRepository;
     private final MovieService movieService;
+    private final ScreenService screenService;
+    private final HallService hallService;
 
     //constructor
     public ShowService(ShowRepository showRepository,
-                       MovieService movieService){
+                       MovieService movieService,
+                       ScreenService screenService,
+                       HallService hallService){
         this.showRepository = showRepository;
         this.movieService = movieService;
+        this.screenService = screenService;
+        this.hallService = hallService;
     }
 
     public ShowResponseDTO saveShow(ShowRequestDTO showDTO){
@@ -33,6 +41,7 @@ public class ShowService {
         Show show = new Show();
         show.setScreenID(showDTO.getScreenId());
         show.setMovie(movie);
+        show.setHallId(showDTO.getHallId());
         show.setStartTime(showDTO.getStartTime());
         show.setEndTime(showDTO.getEndTime());
 
@@ -41,6 +50,7 @@ public class ShowService {
         ShowResponseDTO dto = new ShowResponseDTO();
         dto.setId(savedShow.getId());
         dto.setScreenId(savedShow.getScreenID());
+        dto.setMovieId(savedShow.getMovie().getId());
         dto.setMovieName(savedShow.getMovie().getMovieName());
         dto.setStartTime(savedShow.getStartTime());
         dto.setEndTime(savedShow.getEndTime());
@@ -68,9 +78,9 @@ public class ShowService {
         return showDTO;
     }
 
-    public ShowResponseDTO getShowById(Integer id){
-        Show show = showRepository.findById(id)
-                .orElseThrow(() -> new IdNotFoundException("Show with the given id not found!!"));
+    //returns showdto by id
+    public ShowResponseDTO getShowDTOById(Integer id){
+        Show show = getShowById(id);
 
         ShowResponseDTO showDTO = new ShowResponseDTO();
 
@@ -82,6 +92,13 @@ public class ShowService {
         showDTO.setEndTime(show.getEndTime());
 
         return showDTO;
+    }
+
+    //returns show by id
+    public Show getShowById(int id)
+    {
+        return showRepository.findById(id)
+                .orElseThrow(() -> new IdNotFoundException("Show with the given id not found!!"));
     }
 
     public void deleteShow(Integer id){
@@ -116,4 +133,53 @@ public class ShowService {
 
         return showDTO;
     }
+
+    //get shows details with movidId and hallId
+//    public ShowDetailsDTO getShowDetails(int movieId, int hallId){
+//        ShowDetailsDTO show = showRepository.getShowDetails(movieId, hallId);
+////
+////        Hall hall = new Hall();
+////        hall.setId(show.getHallId());
+////        hall.setHallName(show.get);
+////        ShowDetailsDTO showDetailsDTO = new ShowDetailsDTO();
+//
+////        int screenId = showRepository.getShowsByMovieId(movieId).getScreenID();
+////        Screen screen = screenService.getScreenById(screenId);
+//
+////        showDetailsDTO.setId(show.getId());
+////        showDetailsDTO.setHall(hallService.getHallById(hallId));
+////        showDetailsDTO.setScreen(screenService.getScreenById(show.getScreenID()));
+////        showDetailsDTO.setMovie(movieService.getMovieById(movieId));
+////        showDetailsDTO.setStartTime(show.getStartTime());
+////        showDetailsDTO.setEndTime(show.getEndTime());
+//
+//        return show;
+//    }
+
+    //get available show tickets
+    public List<AvailableShowTicketDTO> getAvailableTickets(int showId){
+        List<AvailableShowTicketsStatusDTO> ticketsDTO = showRepository.getTicketsForShows(showId);
+
+        Show show = getShowById(showId);
+
+        Movie movie = movieService.getMovieById(show.getMovie().getId());
+        Hall hall = hallService.getHallById(show.getHallId());
+
+        List<AvailableShowTicketDTO> availableShowTicketDTO = ticketsDTO.stream()
+                .map(ticket -> {
+                    AvailableShowTicketDTO dto = new AvailableShowTicketDTO();
+                    dto.setMovieName(movie.getMovieName());
+                    dto.setHallName(hall.getHallName());
+                    dto.setScreenId(ticket.getScreenId());
+                    dto.setSeatId(ticket.getSeatId());
+                    dto.setPrice(ticket.getPrice());
+                    dto.setStartTime(ticket.getStartTime());
+                    dto.setEndTime(ticket.getEndTime());
+                    return dto;
+                })
+                .collect(Collectors.toList());
+
+        return availableShowTicketDTO;
+    }
+
 }

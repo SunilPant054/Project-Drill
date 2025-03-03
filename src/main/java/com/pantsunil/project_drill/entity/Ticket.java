@@ -15,13 +15,13 @@ public class Ticket {
 
 
     @Column(name = "seat_id")
-    private int seatID;
+    private int seatId;
 
     @Column(name = "price")
     private int price;
 
     @Column(name = "status")
-    private boolean status;
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "show_id", referencedColumnName = "id")
@@ -47,11 +47,11 @@ public class Ticket {
 
 
     public int getSeatID() {
-        return seatID;
+        return seatId;
     }
 
-    public void setSeatID(int seatID) {
-        this.seatID = seatID;
+    public void setSeatID(int seatId) {
+        this.seatId = seatId;
     }
 
     public int getPrice() {
@@ -62,11 +62,11 @@ public class Ticket {
         this.price = price;
     }
 
-    public boolean isStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -78,12 +78,19 @@ public class Ticket {
         this.seats = seats;
     }
 
+    public Show getShow() {
+        return show;
+    }
+
+    public void setShow(Show show) {
+        this.show = show;
+    }
 
     @Override
     public String toString() {
         return "Ticket{" +
                 "id=" + id +
-                ", seatID=" + seatID +
+                ", seatID=" + seatId +
                 ", price=" + price +
                 ", status=" + status +
                 ", seats=" + seats +

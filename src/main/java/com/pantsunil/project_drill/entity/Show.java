@@ -16,6 +16,9 @@ public class Show {
     @Column(name = "screen_id")
     private int screenID;
 
+    @Column(name = "hall_id")
+    private int hallId;
+
     @Column(name = "start_time")
     private LocalDateTime startTime;
 
@@ -49,6 +52,14 @@ public class Show {
 
     public void setScreenID(int screenID) {
         this.screenID = screenID;
+    }
+
+    public int getHallId() {
+        return hallId;
+    }
+
+    public void setHallId(int hallId) {
+        this.hallId = hallId;
     }
 
     public LocalDateTime getStartTime() {

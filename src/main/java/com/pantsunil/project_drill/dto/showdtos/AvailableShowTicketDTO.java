@@ -1,20 +1,21 @@
 package com.pantsunil.project_drill.dto.showdtos;
 
-import com.pantsunil.project_drill.entity.Movie;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.cglib.core.Local;
 
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @NoArgsConstructor
-public class ShowRequestDTO {
+public class AvailableShowTicketDTO {
+    private String movieName;
+    private String hallName;
     private int screenId;
-    private int movieId;
-    private int hallId;
+    private int seatId;
+    private int price;
     private LocalDateTime startTime;
     private LocalDateTime endTime;
-    private String movieName;
 }

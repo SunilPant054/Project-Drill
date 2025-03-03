@@ -1,5 +1,7 @@
 package com.pantsunil.project_drill.controller;
 
+import com.pantsunil.project_drill.dto.ticketdtos.TicketRequestDTO;
+import com.pantsunil.project_drill.dto.ticketdtos.TicketResponseDTO;
 import com.pantsunil.project_drill.entity.Ticket;
 import com.pantsunil.project_drill.service.TicketService;
 import org.springframework.http.HttpStatus;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/v1/api")
+@RequestMapping("/api/v1")
 public class TicketController {
 
     private final TicketService ticketService;
@@ -32,8 +34,8 @@ public class TicketController {
     }
 
     @PostMapping("/tickets")
-    public ResponseEntity<Ticket> createTicket(@RequestBody Ticket ticket){
-        Ticket savedTicket = ticketService.saveTicket(ticket);
+    public ResponseEntity<TicketResponseDTO> createTicket(@RequestBody TicketRequestDTO ticketRequestDTO){
+        TicketResponseDTO savedTicket = ticketService.saveTicket(ticketRequestDTO);
         return new ResponseEntity<>(savedTicket, HttpStatus.OK);
     }
 
