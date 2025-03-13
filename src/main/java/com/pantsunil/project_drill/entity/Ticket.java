@@ -13,7 +13,6 @@ public class Ticket {
     @Column(name = "id")
     private int id;
 
-
     @Column(name = "seat_id")
     private int seatId;
 
@@ -23,13 +22,7 @@ public class Ticket {
     @Column(name = "status")
     private String status;
 
-    @ManyToOne
-    @JoinColumn(name = "show_id", referencedColumnName = "id")
-    private Show show;
 
-    //relation with seat
-    @OneToMany(mappedBy = "ticket")
-    private List<Seat> seats;
 
     //constructor
     public Ticket() {
@@ -45,12 +38,11 @@ public class Ticket {
         this.id = id;
     }
 
-
-    public int getSeatID() {
+    public int getSeatId() {
         return seatId;
     }
 
-    public void setSeatID(int seatId) {
+    public void setSeatId(int seatId) {
         this.seatId = seatId;
     }
 
@@ -70,30 +62,14 @@ public class Ticket {
         this.status = status;
     }
 
-    public List<Seat> getSeats() {
-        return seats;
-    }
-
-    public void setSeats(List<Seat> seats) {
-        this.seats = seats;
-    }
-
-    public Show getShow() {
-        return show;
-    }
-
-    public void setShow(Show show) {
-        this.show = show;
-    }
 
     @Override
     public String toString() {
         return "Ticket{" +
                 "id=" + id +
-                ", seatID=" + seatId +
+                ", seatId=" + seatId +
                 ", price=" + price +
-                ", status=" + status +
-                ", seats=" + seats +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

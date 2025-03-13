@@ -3,6 +3,7 @@ package com.pantsunil.project_drill.controller;
 import com.pantsunil.project_drill.dto.ticketdtos.TicketRequestDTO;
 import com.pantsunil.project_drill.dto.ticketdtos.TicketResponseDTO;
 import com.pantsunil.project_drill.entity.Ticket;
+import com.pantsunil.project_drill.respository.TicketRepository;
 import com.pantsunil.project_drill.service.TicketService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +21,12 @@ public class TicketController {
     public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
     }
-
-    @GetMapping("/tickets")
-    public ResponseEntity<List<Ticket>> getTickets(){
-        List<Ticket> tickets = ticketService.getAllTickets();
-        return new ResponseEntity<>(tickets, HttpStatus.OK);
-    }
+//
+//    @GetMapping("/tickets")
+//    public ResponseEntity<List<TicketResponseDTO>> getTickets(){
+//        List<TicketResponseDTO> tickets = ticketService.getAllTickets();
+//        return new ResponseEntity<>(tickets, HttpStatus.OK);
+//    }
 
     @GetMapping("/tickets/{id}")
     public ResponseEntity<Ticket> getTicket(@PathVariable int id){
@@ -44,4 +45,5 @@ public class TicketController {
         ticketService.deleteTicket(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
+
 }

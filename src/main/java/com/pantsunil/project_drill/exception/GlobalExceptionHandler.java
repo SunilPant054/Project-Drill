@@ -17,4 +17,9 @@ public class GlobalExceptionHandler {
     public ResponseEntity<?> handleRuntimeException(RuntimeException i){
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(i.getMessage());
     }
+
+    @ExceptionHandler(value = TicketsExistException.class)
+    public ResponseEntity<?> handleTicketsAvailabilityException(TicketsExistException t){
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(t.getMessage());
+    }
 }

@@ -25,6 +25,9 @@ public class Show {
     @Column(name = "end_time")
     private LocalDateTime endTime;
 
+    @Column(name = "ticket_availability")
+    private Boolean ticketAvailability;
+
     //Bidirectional Relationship
     @ManyToOne
     @JoinColumn(name = "movie_id", referencedColumnName = "id")
@@ -86,14 +89,23 @@ public class Show {
         this.movie = movie;
     }
 
-    //tostring method
+    public Boolean getTicketAvailability() {
+        return ticketAvailability;
+    }
+
+    public void setTicketAvailability(Boolean ticketAvailability) {
+        this.ticketAvailability = ticketAvailability;
+    }
+
     @Override
     public String toString() {
         return "Show{" +
                 "id=" + id +
                 ", screenID=" + screenID +
+                ", hallId=" + hallId +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
+                ", ticketAvailability=" + ticketAvailability +
                 ", movie=" + movie +
                 '}';
     }

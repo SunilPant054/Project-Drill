@@ -1,6 +1,9 @@
 package com.pantsunil.project_drill.controller;
 
 import com.pantsunil.project_drill.dto.showdtos.*;
+import com.pantsunil.project_drill.dto.ticketdtos.TicketRequestDTO;
+import com.pantsunil.project_drill.dto.ticketdtos.TicketRequestForSpecificShowDTO;
+import com.pantsunil.project_drill.dto.ticketdtos.TicketResponseDTO;
 import com.pantsunil.project_drill.service.ShowService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -68,4 +71,14 @@ public class ShowController {
         List<AvailableShowTicketDTO> tickets = showService.getAvailableTickets(showId);
         return new ResponseEntity<>(tickets, HttpStatus.OK);
     }
+
+    //create tickets for a particular show for the given showtime
+    @PostMapping("/shows/{showId}/tickets")
+    public ResponseEntity<List<TicketResponseDTO>> createShowTickets(@PathVariable int showId,
+                                                               @RequestBody TicketRequestForSpecificShowDTO ticketRequestDTO){
+        List<TicketResponseDTO> savedTickets = showService.createShowTickets(showId, ticketRequestDTO);
+        return new ResponseEntity<>(savedTickets, HttpStatus.OK);
+    }
+
+
 }

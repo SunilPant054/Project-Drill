@@ -2,12 +2,17 @@ package com.pantsunil.project_drill.service;
 
 import com.pantsunil.project_drill.dto.moviedtos.MovieDTO;
 import com.pantsunil.project_drill.dto.showdtos.*;
-import com.pantsunil.project_drill.entity.Hall;
-import com.pantsunil.project_drill.entity.Movie;
-import com.pantsunil.project_drill.entity.Show;
+import com.pantsunil.project_drill.dto.ticketdtos.TicketRequestDTO;
+import com.pantsunil.project_drill.dto.ticketdtos.TicketRequestForSpecificShowDTO;
+import com.pantsunil.project_drill.dto.ticketdtos.TicketResponseDTO;
+import com.pantsunil.project_drill.entity.*;
 import com.pantsunil.project_drill.exception.IdNotFoundException;
+import com.pantsunil.project_drill.exception.TicketsExistException;
 import com.pantsunil.project_drill.respository.ShowRepository;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -17,14 +22,20 @@ public class ShowService {
     private final ShowRepository showRepository;
     private final MovieService movieService;
     private final HallService hallService;
+    private final ScreenService screenService;
+    private final TicketService ticketService;
 
     //constructor
     public ShowService(ShowRepository showRepository,
                        MovieService movieService,
-                       HallService hallService){
+                       HallService hallService,
+                       ScreenService screenService,
+                       @Lazy TicketService ticketService){
         this.showRepository = showRepository;
         this.movieService = movieService;
         this.hallService = hallService;
+        this.screenService = screenService;
+        this.ticketService = ticketService;
     }
 
     public ShowResponseDTO saveShow(ShowRequestDTO showDTO){
@@ -176,5 +187,53 @@ public class ShowService {
 
         return availableShowTicketDTO;
     }
+
+    //create tickets for particular show in particular showtime
+    public List<TicketResponseDTO> createShowTickets(int showId,
+                                               TicketRequestForSpecificShowDTO ticketRequestDTO){
+        Show show = getShowById(showId);
+        Screen screen = screenService.getScreenById(show.getScreenID());
+
+        if (show.getTicketAvailability()) {
+            throw new TicketsExistException("Tickets for the given show already exist!!");
+        }
+
+        List<Ticket> savedTicketList = new ArrayList<>();
+            for (int seatId =1 ; seatId <= screen.getNumberOfSeats(); seatId++){
+                Ticket ticket = new Ticket();
+                ticket.setSeatId(seatId);
+                ticket.setPrice(ticketRequestDTO.getPrice());
+                ticket.setStatus(ticketRequestDTO.getStatus());
+
+                Ticket savedTicket = ticketService.saveTicket(ticket);
+                savedTicketList.add(savedTicket);
+
+            }
+
+            List<TicketResponseDTO> ticketResponseDTO = savedTicketList.stream()
+            .map(ticket -> {
+                TicketResponseDTO dto = new TicketResponseDTO();
+                dto.setHallId(ticketRequestDTO.getHallId());
+                dto.setScreenId(ticketRequestDTO.getScreenId());
+                dto.setMovieName(show.getMovie().getMovieName());
+                dto.setSeatId(ticket.getSeatId());
+                dto.setPrice(ticket.getPrice());
+                dto.setStartTime(show.getStartTime());
+                dto.setEndTime(show.getEndTime());
+                dto.setStatus(ticket.getStatus());
+                return dto;
+            })
+            .toList();
+
+
+            Movie movie = show.getMovie();
+
+
+            show.setTicketAvailability(Boolean.TRUE);
+            showRepository.save(show);
+
+            return ticketResponseDTO;
+    }
+
 
 }

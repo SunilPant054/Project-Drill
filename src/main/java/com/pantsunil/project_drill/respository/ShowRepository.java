@@ -1,6 +1,5 @@
 package com.pantsunil.project_drill.respository;
 
-import com.pantsunil.project_drill.dto.showdtos.AvailableShowTicketDTO;
 import com.pantsunil.project_drill.dto.showdtos.AvailableShowTicketsStatusDTO;
 import com.pantsunil.project_drill.dto.showdtos.ShowDetailsDTO;
 import com.pantsunil.project_drill.entity.Show;
